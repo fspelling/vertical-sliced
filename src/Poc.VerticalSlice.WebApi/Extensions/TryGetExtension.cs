@@ -1,18 +1,17 @@
-﻿namespace Poc.VerticalSlice.WebApi.Extensions
+﻿namespace Poc.VerticalSlice.WebApi.Extensions;
+
+public static class TryGetExtension
 {
-    public static class TryGetExtension
+    public static bool TryGetIdempotencyKey(this HttpContext context, out Guid idempotenceKey)
     {
-        public static bool TryGetIdempotencyKey(this HttpContext context, out Guid idempotenceKey)
-        {
-            idempotenceKey = Guid.Empty;
+        idempotenceKey = Guid.Empty;
 
-            if (!context.Request.Headers.TryGetValue("Idempotency-Key", out var headerValue))
-                return false;
+        if (!context.Request.Headers.TryGetValue("Idempotency-Key", out var headerValue))
+            return false;
 
-            Guid.TryParse(headerValue, out var parsedKey);
-            idempotenceKey = parsedKey;
+        Guid.TryParse(headerValue, out var parsedKey);
+        idempotenceKey = parsedKey;
 
-            return true;
-        }
+        return true;
     }
 }

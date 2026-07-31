@@ -1,17 +1,16 @@
 ﻿using Prometheus;
 
-namespace Poc.VerticalSlice.Application.Shared.ObservabilityRegistry
+namespace Poc.VerticalSlice.Application.Shared.ObservabilityRegistry;
+
+public static class MetricsRegistry
 {
-    public static class MetricsRegistry
-    {
-        public static readonly Counter ProdutosTotal = Metrics.CreateCounter("produtos_total",
-                                                                             "Total de produtos processados", 
-                                                                             configuration: new CounterConfiguration { LabelNames = [ "status" ] });
+    public static readonly Counter ProdutosTotal = Metrics.CreateCounter("produtos_total",
+                                                                         "Total de produtos processados", 
+                                                                         configuration: new CounterConfiguration { LabelNames = [ "status" ] });
 
-        public static readonly Gauge ProdutosProcessamento = Metrics.CreateGauge("produtos_processamento",
-                                                                                 "Produtos sendo processados no momento");
+    public static readonly Gauge ProdutosProcessamento = Metrics.CreateGauge("produtos_processamento",
+                                                                             "Produtos sendo processados no momento");
 
-        public static readonly Histogram ProdutosTempoProcessamento = Metrics.CreateHistogram("produtos_tempo_processamento",
-                                                                                 "Tempod e processamento dos produtos");
-    }
+    public static readonly Histogram ProdutosTempoProcessamento = Metrics.CreateHistogram("produtos_tempo_processamento",
+                                                                             "Tempod e processamento dos produtos");
 }

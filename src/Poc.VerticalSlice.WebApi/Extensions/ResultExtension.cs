@@ -1,16 +1,14 @@
 ﻿using FluentResults;
 
-namespace Poc.VerticalSlice.WebApi.Extensions
+namespace Poc.VerticalSlice.WebApi.Extensions;
+
+public static class ResultExtension
 {
-    public static class ResultExtension
+    public static IResult ToResultCustom<T>(this Result<T> result)
     {
-        public static IResult ToResultCustom<T>(this Result<T> result)
-        {
-            if (result.IsSuccess)
-                return Results.Ok(result);
+        if (result.IsSuccess)
+            return Results.Ok(result);
 
-            return Results.BadRequest(result.Errors);
-        }
+        return Results.BadRequest(result.Errors);
     }
-
 }
