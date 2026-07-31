@@ -3,9 +3,9 @@ using System.Reflection;
 
 namespace Poc.VerticalSlice.WebApi.Config
 {
-    public static class IocConfigurationExtension
+    public static class DependencyInjectionConfigurationExtension
     {
-        public static IServiceCollection AddIocConfiguration(this IServiceCollection services, Assembly assembly)
+        public static IServiceCollection AddDependencyInjectionConfiguration(this IServiceCollection services, Assembly assembly)
         {
             services.AddMediatR(config => config.RegisterServicesFromAssemblies(assembly));
 

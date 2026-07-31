@@ -2,7 +2,7 @@
 
 namespace Poc.VerticalSlice.WebApi.Configurations
 {
-    public static class MetricsConfiguratioExtension
+    public static class MetricsConfigurationExtension
     {
         public static IServiceCollection AddMetricsConfiguration(this IServiceCollection services)
         {

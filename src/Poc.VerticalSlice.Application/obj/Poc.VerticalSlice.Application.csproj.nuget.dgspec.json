@@ -73,6 +73,10 @@
               "target": "Package",
               "version": "[9.0.18, )"
             },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.0.18, )"
+            },
             "prometheus-net": {
               "target": "Package",
               "version": "[8.2.1, )"

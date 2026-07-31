@@ -8,5 +8,3 @@
 /.vs
 /Poc.VerticalSlice.WebApi/bin/Debug/net9.0
 /Poc.VerticalSlice.WebApi/obj
-/Poc.VerticalSlice.Application/bin
-/Poc.VerticalSlice.Application/obj

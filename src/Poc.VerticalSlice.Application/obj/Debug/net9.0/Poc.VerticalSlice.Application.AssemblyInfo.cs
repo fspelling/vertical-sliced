@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Poc.VerticalSlice.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ef99a99b95c02591163b166dc70607187eb34abf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f1eaa9b78cb3610b99c36b408d94a45e704c9e14")]
 [assembly: System.Reflection.AssemblyProductAttribute("Poc.VerticalSlice.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Poc.VerticalSlice.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

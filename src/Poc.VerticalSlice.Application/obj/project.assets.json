@@ -1007,6 +1007,7 @@
       "MediatR >= 13.0.0",
       "Microsoft.EntityFrameworkCore >= 9.0.18",
       "Microsoft.EntityFrameworkCore.InMemory >= 9.0.18",
+      "Microsoft.Extensions.Logging >= 9.0.18",
       "prometheus-net >= 8.2.1"
     ]
   },
@@ -1080,6 +1081,10 @@
             "version": "[9.0.18, )"
           },
           "Microsoft.EntityFrameworkCore.InMemory": {
+            "target": "Package",
+            "version": "[9.0.18, )"
+          },
+          "Microsoft.Extensions.Logging": {
             "target": "Package",
             "version": "[9.0.18, )"
           },

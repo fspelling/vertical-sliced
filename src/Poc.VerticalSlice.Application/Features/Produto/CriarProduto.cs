@@ -1,7 +1,9 @@
 ﻿using FluentResults;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Poc.VerticalSlice.Application.Shared.DbContexts;
+using System.Text.Json;
 
 namespace Poc.VerticalSlice.Application.Features.Produto;
 
@@ -20,22 +22,36 @@ public static class CriarProduto
         }
     }
 
-    public sealed class Handler(Repository repository, IValidator<Command> validator) : IRequestHandler<Command, Result<Guid>>
+    public sealed class Handler(ILogger<Handler> logger, Repository repository, IValidator<Command> validator) : IRequestHandler<Command, Result<Guid>>
     {
         private readonly Repository _repository = repository;
         private readonly IValidator<Command> _validator = validator;
+        private readonly ILogger<Handler> _logger = logger;
 
         public async Task<Result<Guid>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var validateResult = _validator.Validate(request);
+            try
+            {
+                _logger.LogInformation($"Criando produto. Request: {JsonSerializer.Serialize(request)}");
+                var validateResult = _validator.Validate(request);
 
-            if (!validateResult.IsValid)
-                return Result.Fail(validateResult.Errors.FirstOrDefault()!.ErrorMessage);
+                if (!validateResult.IsValid)
+                {
+                    _logger.LogWarning($"Produto nao pode ser criado: {request}");
+                    return Result.Fail(validateResult.Errors.FirstOrDefault()!.ErrorMessage);
+                }
 
-            var produto = new Shared.Entities.Produto(request.Nome, request.Descricao, request.Preco);
+                var produto = new Shared.Entities.Produto(request.Nome, request.Descricao, request.Preco);
+                await _repository.Criar(produto);
 
-            await _repository.Criar(produto);
-            return Result.Ok(produto.Id);
+                _logger.LogInformation($"Produto criado com sucesso. Produto: {JsonSerializer.Serialize(produto)}");
+                return Result.Ok(produto.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Erro ao criar produto: {JsonSerializer.Serialize(request)}");
+                throw;
+            }
         }
     }
 
