@@ -1,0 +1,6 @@
+@Poc.VerticalSlice.WebApi_HostAddress = http://localhost:5193
+
+GET {{Poc.VerticalSlice.WebApi_HostAddress}}/
+Accept: application/json
+
+###
