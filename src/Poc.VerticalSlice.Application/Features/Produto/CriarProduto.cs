@@ -49,7 +49,7 @@ public static class CriarProduto
             }
             catch (Exception e)
             {
-                _logger.LogError(e, $"Erro ao criar produto: {JsonSerializer.Serialize(request)}");
+                _logger.LogError(e, "Erro ao criar produto: {produto}", JsonSerializer.Serialize(request));
                 throw;
             }
         }
