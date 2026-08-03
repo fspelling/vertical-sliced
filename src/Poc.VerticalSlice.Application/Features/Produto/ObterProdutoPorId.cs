@@ -26,7 +26,7 @@ public static class ObterProdutoPorId
         {
             try
             {
-                _logger.LogInformation($"Buscando produto: {request.Id}");
+                _logger.LogInformation("Buscando produto: {produto}", request.Id);
                 var validateResult = _validator.Validate(request);
 
                 if (!validateResult.IsValid)
@@ -36,16 +36,16 @@ public static class ObterProdutoPorId
 
                 if (produto is null)
                 {
-                    _logger.LogWarning($"Produto nao encontrado: {request.Id}");
+                    _logger.LogWarning($"Produto nao encontrado: {produtoId}", request.Id);
                     return Result.Fail("Produto nao encontrado.");
                 }
-
-                _logger.LogInformation($"Produto encontrado: {JsonSerializer.Serialize(produto)}");
+                
+                _logger.LogInformation("Produto encontrado: {produto}", JsonSerializer.Serialize(produto));
                 return Result.Ok(produto);
             }
             catch (Exception e)
             {
-                _logger.LogError(e, $"Erro ao buscar produto: {request.Id}");
+                _logger.LogError(e, "Erro ao buscar produto: {produtoId}", request.Id);
                 throw;
             }
         }
