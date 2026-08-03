@@ -32,19 +32,19 @@ public static class CriarProduto
         {
             try
             {
-                _logger.LogInformation($"Criando produto. Request: {JsonSerializer.Serialize(request)}");
+                _logger.LogInformation("Criando produto. Request: {RequestJson}", JsonSerializer.Serialize(request));
                 var validateResult = _validator.Validate(request);
 
                 if (!validateResult.IsValid)
                 {
-                    _logger.LogWarning($"Produto nao pode ser criado: {request}");
+                    _logger.LogWarning("Produto nao pode ser criado");
                     return Result.Fail(validateResult.Errors.FirstOrDefault()!.ErrorMessage);
                 }
 
                 var produto = new Shared.Entities.Produto(request.Nome, request.Descricao, request.Preco);
                 await _repository.Criar(produto);
 
-                _logger.LogInformation($"Produto criado com sucesso. Produto: {JsonSerializer.Serialize(produto)}");
+                _logger.LogInformation("Produto criado com sucesso. Produto: {produto}", JsonSerializer.Serialize(produto)});
                 return Result.Ok(produto.Id);
             }
             catch (Exception e)
