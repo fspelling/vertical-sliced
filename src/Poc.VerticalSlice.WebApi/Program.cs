@@ -5,7 +5,6 @@ using Poc.VerticalSlice.WebApi.Configurations;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var assembly = typeof(Program).Assembly;
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
@@ -14,9 +13,9 @@ builder.Services.AddCarter();
 builder.Services
     .AddMetricsConfiguration()
     .AddDatabaseConfiguration()
-    .AddDependencyInjectionConfiguration(assembly);
+    .AddDependencyInjectionConfiguration();
 
-builder.Services.AddValidatorsFromAssembly(assembly);
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 var app = builder.Build();
 

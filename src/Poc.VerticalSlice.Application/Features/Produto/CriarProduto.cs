@@ -44,7 +44,7 @@ public static class CriarProduto
                 var produto = new Shared.Entities.Produto(request.Nome, request.Descricao, request.Preco);
                 await _repository.Criar(produto);
 
-                _logger.LogInformation("Produto criado com sucesso. Produto: {produto}", JsonSerializer.Serialize(produto)});
+                _logger.LogInformation("Produto criado com sucesso. Produto: {produto}", JsonSerializer.Serialize(produto));
                 return Result.Ok(produto.Id);
             }
             catch (Exception e)

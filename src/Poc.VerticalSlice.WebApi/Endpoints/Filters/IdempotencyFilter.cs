@@ -10,7 +10,7 @@ public sealed class IdempotencyFilter(int cacheTime = 60) : IEndpointFilter
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
         if (!context.HttpContext.TryGetIdempotencyKey(out Guid idempotenceKey))
-            return Results.BadRequest("Chave 'Idempotence-Key' inválido ou ausente");
+            return Results.BadRequest("Chave 'Idempotency-Key' inválido ou ausente");
 
         var cache = context.HttpContext.RequestServices.GetRequiredService<IDistributedCache>();
 

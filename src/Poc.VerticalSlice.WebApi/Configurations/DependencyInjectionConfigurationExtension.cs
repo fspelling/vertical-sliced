@@ -1,13 +1,15 @@
-﻿using Poc.VerticalSlice.Application.Features.Produto;
-using System.Reflection;
+﻿using FluentValidation;
+using Poc.VerticalSlice.Application;
+using Poc.VerticalSlice.Application.Features.Produto;
 
 namespace Poc.VerticalSlice.WebApi.Config;
 
 public static class DependencyInjectionConfigurationExtension
 {
-    public static IServiceCollection AddDependencyInjectionConfiguration(this IServiceCollection services, Assembly assembly)
+    public static IServiceCollection AddDependencyInjectionConfiguration(this IServiceCollection services)
     {
-        services.AddMediatR(config => config.RegisterServicesFromAssemblies(assembly));
+        services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ApplicationAssemblyMarker).Assembly));
+        services.AddValidatorsFromAssembly(typeof(ApplicationAssemblyMarker).Assembly);
 
         services.AddScoped<CriarProduto.Repository>();
         services.AddScoped<ObterProdutoPorId.Repository>();

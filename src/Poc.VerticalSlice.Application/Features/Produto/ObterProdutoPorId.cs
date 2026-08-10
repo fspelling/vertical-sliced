@@ -36,7 +36,7 @@ public static class ObterProdutoPorId
 
                 if (produto is null)
                 {
-                    _logger.LogWarning($"Produto nao encontrado: {produtoId}", request.Id);
+                    _logger.LogWarning("Produto nao encontrado: {produtoId}", request.Id);
                     return Result.Fail("Produto nao encontrado.");
                 }
                 
