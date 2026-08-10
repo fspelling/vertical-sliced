@@ -3,15 +3,20 @@ WORKDIR /app
 EXPOSE 5193
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-WORKDIR /build
-COPY ["Poc.VerticalSlice.Application.csproj", "."]
-COPY ["Poc.VerticalSlice.WebApi.csproj", "."]
-RUN dotnet restore "Poc.VerticalSlice.WebApi.csproj"
+WORKDIR /src
+COPY ["src/Poc.VerticalSlice.Application/Poc.VerticalSlice.Application.csproj", "Poc.VerticalSlice.Application/"]
+COPY ["src/Poc.VerticalSlice.WebApi/Poc.VerticalSlice.WebApi.csproj", "Poc.VerticalSlice.WebApi/"]
+RUN dotnet restore "Poc.VerticalSlice.WebApi/Poc.VerticalSlice.WebApi.csproj"
 COPY . .
-RUN dotnet build "Poc.VerticalSlice.WebApi.csproj" -c Release -o /app/build
+RUN dotnet build "Poc.VerticalSlice.WebApi/Poc.VerticalSlice.WebApi.csproj" \
+    -c Release \
+    -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Poc.VerticalSlice.WebApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "Poc.VerticalSlice.WebApi/Poc.VerticalSlice.WebApi.csproj" \
+    -c Release \
+    -o /app/publish \
+    --no-restore
 
 FROM base AS final
 ARG USERNAME=dev
