@@ -13,7 +13,8 @@ builder.Services.AddCarter();
 builder.Services
     .AddMetricsConfiguration()
     .AddDatabaseConfiguration()
-    .AddDependencyInjectionConfiguration();
+    .AddDependencyInjectionConfiguration()
+    .AddTracerConfiguration(builder.Configuration);
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 

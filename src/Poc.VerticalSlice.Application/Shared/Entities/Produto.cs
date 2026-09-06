@@ -1,19 +1,10 @@
 ﻿namespace Poc.VerticalSlice.Application.Shared.Entities;
 
-public class Produto
+public class Produto(string nome, string? descricao, decimal preco)
 {
-    public Guid Id { get; private set; }
-    public string Nome { get; private set; }
-    public string? Descricao { get; private set; }
-    public decimal Preco { get; private set; }
-    public DateTime DataCriacaoUtc { get; private set; }
-
-    public Produto(string nome, string? descricao, decimal preco)
-    {
-        Id = Guid.NewGuid();
-        Nome = nome;
-        Preco = preco;
-        Descricao = descricao;
-        DataCriacaoUtc = DateTime.UtcNow;
-    }
+    public Guid Id { get; private set; } = Guid.NewGuid();
+    public string Nome { get; private set; } = nome;
+    public string? Descricao { get; private set; } = descricao;
+    public decimal Preco { get; private set; } = preco;
+    public DateTime DataCriacaoUtc { get; private set; } = DateTime.UtcNow;
 }

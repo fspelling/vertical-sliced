@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Poc.VerticalSlice.Application.Shared.DbContexts;
 using System.Text.Json;
@@ -56,6 +57,8 @@ public static class ObterProdutoPorId
         private readonly VsaDbContext _vsaDbContext = vsaDbContext;
 
         public async Task<Shared.Entities.Produto?> ObterPorId(Guid id)
-            => await _vsaDbContext.Produtos.FindAsync(id);
+        {
+            return await _vsaDbContext.Produtos.FindAsync(id);
+        }
     }
 }

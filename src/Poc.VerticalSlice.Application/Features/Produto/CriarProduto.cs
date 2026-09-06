@@ -60,6 +60,8 @@ public static class CriarProduto
         private readonly VsaDbContext _vsaDbContext = vsaDbContext;
 
         public async Task Criar(Shared.Entities.Produto produto)
-            => await _vsaDbContext.AddAsync(produto);
+        {
+            await _vsaDbContext.Produtos.AddAsync(produto);
+        }
     }
 }
