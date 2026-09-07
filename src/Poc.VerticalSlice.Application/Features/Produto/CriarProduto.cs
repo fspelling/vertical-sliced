@@ -2,6 +2,7 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using OpenTracing;
 using Poc.VerticalSlice.Application.Shared.DbContexts;
 using System.Text.Json;
 
@@ -55,9 +56,10 @@ public static class CriarProduto
         }
     }
 
-    public sealed class Repository(VsaDbContext vsaDbContext)
+    public sealed class Repository(VsaDbContext vsaDbContext, ITracer tracer)
     {
         private readonly VsaDbContext _vsaDbContext = vsaDbContext;
+        private readonly ITracer _tracer = tracer;
 
         public async Task Criar(Shared.Entities.Produto produto)
         {

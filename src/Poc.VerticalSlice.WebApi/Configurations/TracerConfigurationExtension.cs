@@ -18,8 +18,8 @@ namespace Poc.VerticalSlice.WebApi.Configurations
 
                 Configuration.SenderConfiguration.DefaultSenderResolver = new SenderResolver(loggerFactory).RegisterSenderFactory<ThriftSenderFactory>();
 
-                var jaegerHost = configuration["JAEGER_HOST"] ?? "localhost";
-                var jaegerPort = int.Parse(configuration["JAEGER_PORT"] ?? "6831");
+                var jaegerHost = configuration["Tracing:JAEGER_HOST"] ?? "localhost";
+                var jaegerPort = int.Parse(configuration["Tracing:JAEGER_PORT"] ?? "6831");
 
                 var seenderConfig = new Configuration.SenderConfiguration(loggerFactory)
                     .WithAgentHost(jaegerHost)

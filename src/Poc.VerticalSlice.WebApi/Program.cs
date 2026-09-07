@@ -14,7 +14,8 @@ builder.Services
     .AddMetricsConfiguration()
     .AddDatabaseConfiguration()
     .AddDependencyInjectionConfiguration()
-    .AddTracerConfiguration(builder.Configuration);
+    .AddTracerConfiguration(builder.Configuration)
+    .AddExternalApisConfiguration(builder.Configuration);
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
