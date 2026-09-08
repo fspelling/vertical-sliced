@@ -20,6 +20,7 @@ namespace Poc.VerticalSlice.WebApi.Configurations
 
                 var jaegerHost = configuration["Tracing:JAEGER_HOST"] ?? "localhost";
                 var jaegerPort = int.Parse(configuration["Tracing:JAEGER_PORT"] ?? "6831");
+                var serviceName = configuration["Tracing:JAEGER_SERVICE_NAME"] ?? "vertical-slice-webapi";
 
                 var seenderConfig = new Configuration.SenderConfiguration(loggerFactory)
                     .WithAgentHost(jaegerHost)
@@ -30,7 +31,7 @@ namespace Poc.VerticalSlice.WebApi.Configurations
 
                 var metrics = new MetricsImpl(NoopMetricsFactory.Instance);
 
-                var tracer = new Tracer.Builder("vertical-slice-webapi")
+                var tracer = new Tracer.Builder(serviceName)
                     .WithLoggerFactory(loggerFactory)
                     .WithSampler(new ConstSampler(sample: true))
                     .WithReporter(reporterConfig.GetReporter(metrics))
