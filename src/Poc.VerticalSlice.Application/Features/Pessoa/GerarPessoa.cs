@@ -19,19 +19,32 @@ public static class GerarPessoa
         {
             _logger.LogInformation("Gerando uma nova pessoa de forma randomica.");
 
-            var responsePessoaDocumento = await _geradorPessoaDocumentoAPI.GerarPessoaDocumento();
-            var responsePessoaNome = await _geradorPessoaNomeAPI.GerarPessoaNome();
-
-            if (responsePessoaDocumento is null || responsePessoaNome is null)
+            try
             {
-                _logger.LogError("Erro ao gerar uma nova pessoa de forma randomica.");
-                return Result.Fail<Shared.Entities.Pessoa>("Erro ao gerar uma nova pessoa de forma randomica.");
+                var responsePessoaDocumento = await _geradorPessoaDocumentoAPI.GerarPessoaDocumento();
+                var responsePessoaNome = await _geradorPessoaNomeAPI.GerarPessoaNome();
+
+                if (responsePessoaDocumento is null || responsePessoaNome is null)
+                {
+                    _logger.LogError("Erro ao gerar uma nova pessoa de forma randomica.");
+                    return Result.Fail<Shared.Entities.Pessoa>("Erro ao gerar uma nova pessoa de forma randomica.");
+                }
+
+                var pessoa = new Shared.Entities.Pessoa(responsePessoaDocumento.Cpf, responsePessoaDocumento.RG, responsePessoaNome.Nome);
+                _logger.LogInformation("Nova pessoa gerada com sucesso: {@Pessoa}", pessoa);
+
+                return Result.Ok(pessoa);
             }
-
-            var pessoa = new Shared.Entities.Pessoa(responsePessoaDocumento.Cpf, responsePessoaDocumento.RG, responsePessoaNome.Nome);
-            _logger.LogInformation("Nova pessoa gerada com sucesso: {@Pessoa}", pessoa);
-
-            return Result.Ok(pessoa);
+            catch (Refit.ApiException ex)
+            {
+                _logger.LogError(ex, "Falha ao chamar um serviço externo ao gerar pessoa. Status: {StatusCode}", ex.StatusCode);
+                return Result.Fail<Shared.Entities.Pessoa>("Falha ao chamar um serviço externo.");
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "Serviço externo indisponível ao gerar pessoa.");
+                return Result.Fail<Shared.Entities.Pessoa>("Serviço externo indisponível.");
+            }
         }
     }
 }

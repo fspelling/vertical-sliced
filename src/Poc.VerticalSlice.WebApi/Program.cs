@@ -29,6 +29,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapCarter();
 app.UseMetricsConfiguration();
+app.UseTracerConfiguration();
 
 app.UseHttpsRedirection();
 app.Run();

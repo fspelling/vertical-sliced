@@ -68,5 +68,36 @@ namespace Poc.VerticalSlice.WebApi.Configurations
 
             return services;
         }
+
+        public static void UseTracerConfiguration(this WebApplication app)
+        {
+            app.Use(async (context, next) =>
+            {
+                var tracer = context.RequestServices.GetRequiredService<ITracer>();
+                var logger = context.RequestServices
+                    .GetRequiredService<ILoggerFactory>()
+                    .CreateLogger("TraceScope");
+
+                var jaegerTraceId = tracer.ActiveSpan?.Context.TraceId ?? "";
+
+                using (logger.BeginScope("JaegerTraceId:{JaegerTraceId}", jaegerTraceId))
+                {
+                    try
+                    {
+                        await next();
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, "Erro genérico ao processar a requisição");
+
+                        if (!context.Response.HasStarted)
+                        {
+                            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                            await context.Response.WriteAsJsonAsync(new { erro = "Erro interno ao processar a requisição." });
+                        }
+                    }
+                }
+            });
+        }
     }
 }
